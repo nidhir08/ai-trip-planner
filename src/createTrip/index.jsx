@@ -4,14 +4,30 @@ import { AI_prompt, SelectBudget, SelectTravelList } from '@/constants/options';
 import { chatSession } from '@/service/AIMODAL';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { FcGoogle } from "react-icons/fc";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+} from "@/components/ui/dialog"
+import { useGoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '@/service/firebaseConfig';
+import { BiLoaderAlt } from "react-icons/bi";
+import { useNavigate } from 'react-router-dom';
+
+
 function CreateTrip() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [selectedPlace, setSelectedPlace] = useState('');
   const[formData,setFormData] = useState([]);
+  const[dialog,setDialog]= useState(false);
+  const[loading,setLoading] = useState(false);
 
-  
+   const navigate = useNavigate();
   
   const handleInputChange = async (e) => {
     setQuery(e.target.value);
@@ -49,7 +65,21 @@ const handleFormInput = (name, value) => {
     console.log(formData);
   },[formData])
 
+  const login = useGoogleLogin({
+    onSuccess: (codeResponse) => {
+      console.log(codeResponse); // This is where the access token is obtained
+      GetUserProfile(codeResponse); // Call GetUserProfile with the token
+    },
+    onError:(error)=> console.log(error)
+  })
   const NoofDays =async()=>{
+
+    const user = localStorage.getItem('user');
+    if(!user){
+      setDialog(true);
+      return;
+    }
+
     if(formData?.noOfDays>10 && formData?.location|| formData?.budget||formData?.traveler ){
       toast("Event has been created");
     }else{
@@ -57,7 +87,7 @@ const handleFormInput = (name, value) => {
 
     } 
     console.log(formData) ;
-
+    setLoading(true);
     const FINAL_PROMPT = AI_prompt
       .replace('{location}',formData?.location)
       .replace('{totalDays}',formData?.noOfDays)
@@ -68,14 +98,47 @@ const handleFormInput = (name, value) => {
 
       console.log(FINAL_PROMPT);
 
-    
+    const result = await chatSession.sendMessage(FINAL_PROMPT);
+    console.log(result?.response?.text())
+    setLoading(false);
+    SaveTrip(result?.response?.text());
     
   }
   
+  const GetUserProfile = (tokenInfo) =>{
+    axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo?.access_token}`,{
+     headers:{
+      Authorization: `Bearer ${tokenInfo?.access_token}`,
+      Accept: 'Application/json'
+     }
+    }).then((resp)=>{
+      console.log("called",resp);
+      localStorage.setItem('user',JSON.stringify(resp.data));
+      setDialog(false);
+      NoofDays();
+     
+    })
+  }
+
+  const SaveTrip = async(TripData)=>{
+    setLoading(true);
+    const user = JSON.parse(localStorage.getItem('user'));
+    const docId = Date.now().toString()
+    await setDoc(doc(db, "Trips" , docId),{
+      userSelection: formData,
+      tripData: JSON.parse(TripData),
+      userEmail: user?.email,
+      id:docId
+
+    });
+    setLoading(false);
+    navigate('/viewTrip/'+docId);
+  }
 
   return (
     <>
-      <div className='text-left'>
+    <div className='p-4'> 
+      <div className='text-left '>
         <h1 className='font-bold text-4xl my-8 '>Tell us your travel preferences 🏕️🌴</h1>
         <p className='mt-2 text-gray-500 text-xl'>
           Just provide some basic information, and our trip planner will generate a customized itinerary based on your preferences.
@@ -152,11 +215,32 @@ const handleFormInput = (name, value) => {
         </div>
 
         <div className=' mt-5 text-right'>
-         <Button onClick={NoofDays}>Generate Trip!!</Button>
+         <Button disabled={loading} onClick={NoofDays}>
+          {loading?
+          <BiLoaderAlt className='h-7 w-7 animate-spin'/>: 'Generate Trip!!'
+        }
+          </Button>
         </div>
       </div>
+      <Dialog open={dialog} onOpenChange={(open) => setDialog(open)}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogDescription>
+            <img src ="/logo.svg" className='h-20 w-20'/>
+            <h2 className='font-bold text-lg mt-6 text-black'>Sign In With Google</h2>
+           <p className='my-2 text-l font-medium'> Sign in to the App with Google authentication securely</p> 
+           <Button className="w-full mt-4 flex gap-5 items-center " onClick={login}>
+           <FcGoogle  className='h-10 w-10'/>
+
+            Sign In With Google</Button>
+          </DialogDescription>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
+    </div>
     </>
-  );
+      
+  )
 }
 
 export default CreateTrip;

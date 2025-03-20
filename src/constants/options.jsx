@@ -26,7 +26,7 @@ export const SelectTravelList =[
         title:"Friends",
         desc:'Extra Fun Trip',
         icon:' 🏝️ ',
-        people: '3 to 5'
+        people: ' 5 to 10'
     }
 ]
 export const SelectBudget =[

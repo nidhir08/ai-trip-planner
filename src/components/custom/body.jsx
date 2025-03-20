@@ -12,7 +12,7 @@ function Body() {
       <Button className='p-6 m-2 px-10'>Get Started</Button>
       </Link>
       <div className='w-full'>
-      <img src='location.jpg' className="w-full object-cover box-border"/>
+      <img src='location.jpg' className="w-screen object-cover box-border"/>
 
       </div>
       
