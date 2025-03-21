@@ -6,15 +6,18 @@ import { toast } from 'sonner';
 import {useEffect , useState} from 'react'
 import Information from '../components/Information';
 import Hotels from '../components/Hotels';
+import Itinerary from '../components/Itinerary';
+import Footer from '../components/Footer';
 
 const ViewTrip = () => {
     const {tripId}= useParams();
     const[trip,setTrip] = useState();
 
     useEffect(() => {
-        tripId&&GetTripData();
-    }, [tripId]
-    )
+        if (tripId) {
+          GetTripData();
+        }
+      }, [tripId]);
 
     const GetTripData = async()=>{
         const docRef = doc(db,'Trips',tripId);
@@ -33,6 +36,10 @@ const ViewTrip = () => {
         <Information trip={trip}/>
         {/* Hotels info */}
         <Hotels trip = {trip}/>
+        {/* Itinerary info */}
+        <Itinerary trip = {trip}/>
+        {/* Footer section  */}
+        <Footer trip={trip} />
     </div>
   )
 }

@@ -1,7 +1,16 @@
 import { Button } from '@/components/ui/button'
 import React from 'react'
 import { IoIosSend } from "react-icons/io";
+import { useState , useEffect} from 'react';
+import { GetPlaceDetails } from '@/service/GlobalApi';
 function Information({trip}) {
+    if (!trip) {
+        return <div>Loading...</div>; // Handle case where trip data isn't available yet
+      }
+    
+      const userSelection = trip.userSelection || {};
+
+
   return (
     <div>
         <img src= '/location.jpg' className='h-[500px] w-full object-cover rounded-2xl'/>
