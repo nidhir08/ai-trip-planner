@@ -86,7 +86,7 @@ const handleFormInput = (name, value) => {
       toast('Please fill all the details')
 
     } 
-    console.log(formData) ;
+    console.log(formData);
     setLoading(true);
     const FINAL_PROMPT = AI_prompt
       .replace('{location}',formData?.location)
