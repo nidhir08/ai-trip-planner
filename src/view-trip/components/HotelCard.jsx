@@ -4,15 +4,17 @@ import { Button } from '@/components/ui/button';
 import { GetPlaceDetails } from '@/service/GlobalApi';
 
 function HotelCard({item}) {
+    const [photoUrl, setPhotoUrl] = useState(null); 
+    
     useEffect(() => {
             item && GetPlacePhoto();
           }, [item]);
           
     
-    const [photoUrl, setPhotoUrl] = useState(null); 
+
         const GetPlacePhoto = async () => {
             try {
-                const data = { textQuery: item.hotel_name };
+                const data = { textQuery: item?.hotel_name };
                 const response = await GetPlaceDetails(data);
         
                // console.log("Full API Response:", response.data);
@@ -28,8 +30,8 @@ function HotelCard({item}) {
                         
                         if (photoReference) {
                             // Ensure the correct format
-                            const cleanedPhotoReference = photoReference.split("/").pop();  
-                            const photoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxHeight=1000&maxwidth=800&photo_reference=${cleanedPhotoReference}&key=${import.meta.env.VITE_API_KEY}`;
+                            const cleanedPhotoReference = photoReference.split('/').pop();  
+                            const photoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxheight=1000&maxwidth=800&photo_reference=${cleanedPhotoReference}&key=${import.meta.env.VITE_API_KEY}`;
         
                             console.log("Generated Photo URL:", photoUrl);
         
@@ -51,20 +53,25 @@ function HotelCard({item}) {
   return (
     <div>
            <Link to={'https://www.google.com/maps/search/?api=1&query='+item.hotel_name+" "+item.hotel_address} target='_blank'>
-            <div className='grid bg-gray-200 rounded-2xl hover:scale-120 transition-all cursor-pointer '>
-                <img src={photoUrl} className='rounded-2xl'/>
-                <div className='text-center p-3'>
-                    <h2 className='font-bold'>{item.hotel_name}</h2>
-                    <h2 className='text-gray-600 font-medium'>{item.description}</h2>
-                    <h2 className='font-semibold my-2'>📍{item.hotel_address}</h2>
-                    <div className='flex flex-cols-2 gap-12 mt-5 mx-5 ' >
-                        <Button className='p-5 rounded-4xl px-3'>💵 {item.price_per_night}</Button>
-                        <Button className='p-5 rounded-4xl px-3'>⭐ {item.rating}</Button>
+           <div className=" bg-gray-100 rounded-2xl hover:scale-105 transition-all cursor-pointer shadow-md hover:shadow-lg overflow-hidden  flex flex-col  min-h-[400px] h-full">
+  <img src={photoUrl ? photoUrl : '/location.jpg'} className="rounded-t-2xl h-56 w-full object-cover" />
+  <div className="text-center p-4">
+    <h2 className="font-bold text-lg text-gray-800">{item.hotel_name}</h2>
+    <div className="text-gray-500 text-sm overflow-hidden text-ellipsis whitespace-nowrap">{item.description}</div>
+    <div className="font-semibold my-2 text-gray-700  gap-1 overflow-hidden text-ellipsis whitespace-nowrap">
+      📍 {item.hotel_address}
+    </div>
+    <div className="flex justify-center gap-5 mt-4">
+      <Button className="p-3 px-5 rounded-full bg-green-500 text-white shadow-md hover:bg-green-600">
+        💵 {item.price_per_night}
+      </Button>
+      <Button className="p-3 px-5 rounded-full bg-yellow-400 text-white shadow-md hover:bg-yellow-500">
+        ⭐ {item.rating}
+      </Button>
+    </div>
+  </div>
+</div>
 
-                    </div>
-
-                </div>
-                </div>
                 </Link>
     </div>
   )

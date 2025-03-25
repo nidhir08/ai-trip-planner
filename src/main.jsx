@@ -8,7 +8,8 @@ import Header from "./components/custom/header";
 import { Toaster } from "./components/ui/sonner";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import ViewTrip from "./view-trip/[tripId]";
-
+import { BrowserRouter } from 'react-router-dom';
+import MyTrips from "./my-trips";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +25,11 @@ const router = createBrowserRouter([
   {
    path: '/viewTrip/:tripId',
    element: <ViewTrip/>
-  }
+  },
+  {
+    path: 'my-trips',
+    element: <MyTrips/>
+   }
 ])
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

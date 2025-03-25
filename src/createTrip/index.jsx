@@ -170,7 +170,9 @@ const handleFormInput = (name, value) => {
         </div>
         <div className='mt-5 text-left'>
         <h2 className='text-xl font-medium my-4'>How many days are you planning your trip?</h2>
-        <Input placeholder="Ex.3" type="number"  onChange={(e)=>handleFormInput('noOfDays',e.target.value)}/>
+        <Input placeholder="Ex.3" type="number" 
+        value={formData?.noOfDays || ''} 
+        onChange={(e)=>handleFormInput('noOfDays',Number(e.target.value))}/>
         </div>
 
         <div className='mt-5 text-left '>
