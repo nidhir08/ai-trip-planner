@@ -20,6 +20,11 @@ import axios from 'axios';
 
 function Header() {
   const user= JSON.parse(localStorage.getItem('user'));
+  const handleLogout = () => {
+    googleLogout();
+    localStorage.clear();
+    window.location.href = '/'; // Redirect to homepage after logout
+  };
   const[dialog,setDialog]= useState(false);
   useEffect(()=>{
     console.log("user details are",user);
@@ -46,6 +51,7 @@ function Header() {
      
     })
   }
+ 
   return (
     <div className=' p-2 w-[100vw] overflow-hidden shadow-sm flex justify-between items-center '>
       <img src='/logo.svg' className='h-15 w-30'/>
@@ -63,9 +69,10 @@ function Header() {
     <img src={`${user?.picture}?sz=200`} className='h-[30px] w-[30px] rounded-full object-cover'/>
   </PopoverTrigger>
   <PopoverContent>
-    <h2 onClick={()=>{
+    <h2 className='cursor-pointer' onClick={()=>{
         googleLogout();
         localStorage.clear();
+        window.location.href = '/';
       }}>Logout</h2>
   </PopoverContent>
 </Popover>

@@ -53,7 +53,7 @@ const [photoUrl, setPhotoUrl] = useState(null);
 
   return (
     <div>
-        <img src= {photoUrl} className='h-[500px] w-full object-cover rounded-2xl'/>
+        <img src= {photoUrl?photoUrl: '/location.jpg'} className='h-[500px] w-full object-cover rounded-2xl'/>
         <div className='my-5 flex flex-col gap-2'>
             <h2 className='font-bold text-2xl'>{trip?.userSelection?.location}</h2>
 <div className='flex  flex-cols gap-6'>

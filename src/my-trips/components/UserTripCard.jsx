@@ -46,17 +46,28 @@ function UserTripCard({trip}) {
                    console.error("Error fetching place details:", error);
                }
            };
-  return (
-    <div>
-        <Link to={'/viewTrip/'+trip.id} className='grid bg-gray-200 rounded-2xl hover:scale-120 transition-all cursor-pointer ' key={trip.id}> 
-        <img src={photoUrl? photoUrl: '/location.jpg'} className=' object-cover rounded-2xl'/>
-        <div>
-            <h2 className='font-bold text-lg'>{trip?.userSelection?.location}</h2>
-            <h2 className='text-sm text-gray-500'>{trip?.userSelection?.noOfDays} trip with {trip?.userSelection?.budget} budget</h2>
-        </div>
-        </Link>
-    </div>
-  )
+           return (
+            <div className="bg-gray-200 rounded-2xl hover:scale-105 transition-all cursor-pointer overflow-hidden shadow-lg transform hover:shadow-xl">
+              <Link to={`/viewTrip/${trip.id}`} key={trip.id}>
+                {/* Image Section */}
+                <div className="relative">
+                  <img 
+                    src={photoUrl ? photoUrl : '/location.jpg'} 
+                    alt={trip?.userSelection?.location || "Trip Image"} 
+                    className="object-contain w-full h-full rounded-t-2xl transition-transform duration-300 hover:scale-110"
+                  />
+                </div>
+                {/* Text Section */}
+                <div className="p-5">
+                  <h2 className="font-bold text-xl text-gray-800 truncate">{trip?.userSelection?.location}</h2>
+                  <h3 className="text-sm text-gray-500 mt-1">
+                    {trip?.userSelection?.noOfDays} day trip with a budget of {trip?.userSelection?.budget}
+                  </h3>
+                </div>
+              </Link>
+            </div>
+          );
+          
 }
 
 export default UserTripCard

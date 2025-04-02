@@ -26,7 +26,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
         {
           role: "user",
           parts: [
-            {text: "Generate travel plan for location: paris , for 5 days trip for a couple with a moderate budget.give me a hotel lists with hotel name, price, hotel address, hotel images url, geo coordinates, rating, description and suggest iternaries with place name , place details, place name, lace image url, geo coordinates, ticket pricing, rating , time travel for each of the location for 5 days trip with the best time to visit in json format"},
+            {text: "Generate travel plan for location: paris , for 5 days trip for a couple with a moderate budget.give me a hotel lists with hotel name, price, hotel address, hotel images url, geo coordinates, rating, description and suggest iternaries with place name , place details, place name,valid place image url, geo coordinates, ticket pricing, rating , time travel for each of the location for 5 days trip with the best time to visit in json format."},
           ],
         },
         {
