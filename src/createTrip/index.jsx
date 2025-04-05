@@ -132,7 +132,9 @@ const handleFormInput = (name, value) => {
 
     });
     setLoading(false);
-    navigate('/viewTrip/'+docId);
+    // navigate('/viewTrip/'+docId);
+    window.location.href = '/viewTrip/' + docId;
+
   }
 
   return (
