@@ -178,7 +178,7 @@ function PlaceCard({ activity }) {
 
                 <Button className="bg-teal-500 text-white font-semibold hover:bg-teal-400 transition-all mt-4 py-2 rounded-lg w-full">
                     <Link
-                        to={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(normalizedActivity.place_name)}`}
+                        to={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(normalizedActivity.place_name)}@${normalizedActivity.geo_coordinates.latitude},${normalizedActivity.geo_coordinates.longitude}`}
                         target='_blank'
                         className="flex items-center justify-center gap-2"
                     >
