@@ -63,7 +63,7 @@ function HotelCard({item}) {
     </div>
     <div className="flex justify-center gap-5 mt-4">
       <Button className="p-3 px-5 rounded-full bg-green-500 text-white shadow-md hover:bg-green-600">
-        💵 {item.price_per_night}
+        💵 {item.price_per_night ||item.price}
       </Button>
       <Button className="p-3 px-5 rounded-full bg-yellow-400 text-white shadow-md hover:bg-yellow-500">
         ⭐ {item.rating}

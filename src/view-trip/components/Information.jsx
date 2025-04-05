@@ -34,10 +34,10 @@ const [photoUrl, setPhotoUrl] = useState(null);
                         const photoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxHeight=1000&maxwidth=800&photo_reference=${cleanedPhotoReference}&key=${import.meta.env.VITE_API_KEY}`;
     
                         console.log("Generated Photo URL:", photoUrl);
-    
                         setPhotoUrl(photoUrl)
                     } else {
                         console.warn("No valid photo reference found.");
+                        setPhotoUrl('/location.jpg')
                     }
                 } else {
                     console.warn("No photos available in API response.");
