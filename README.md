@@ -1,16 +1,29 @@
-<<<<<<< HEAD
-# React + Vite
+# AI Travel Planner
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An intelligent travel planning platform built with React.js, Firebase, Google API, and OpenAI Gemini. This app helps users design personalized travel itineraries by combining state-of-the-art AI recommendations powered by OpenAI Gemini with live location data from Google’s services. With a clean, responsive UI styled using TailwindCSS, users can effortlessly explore destinations, discover points of interest, and organize their trips.
 
-Currently, two official plugins are available:
+## How to Use
+Sign Up / Log In: Securely create an account or log in using Firebase Authentication to save your travel plans.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Search Destinations: Use the integrated Google Places API to search and explore cities, landmarks, hotels, restaurants, and attractions in real time.
 
-## Expanding the ESLint configuration
+AI Recommendations with OpenAI Gemini: Receive advanced AI-powered suggestions for activities, restaurants, and travel routes personalized to your preferences and trip details. Gemini’s enhanced natural language understanding and reasoning capabilities provide richer, context-aware travel ideas.
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-=======
-# ai-trip-planner
->>>>>>> 66b5266f2145f4f0c90eeedcf20fe0ed8b39df15
+Create Itinerary: Add your favorite locations and activities to a customizable itinerary, which you can edit or expand anytime.
+
+Save and Share: Store your travel plans securely in Firebase and share your itineraries with friends or family.
+
+Responsive Experience: Access your travel planner on any device, with an intuitive design powered by TailwindCSS.
+
+## Technologies
+React.js: For building a dynamic and interactive frontend.
+
+TailwindCSS: For styling a clean, responsive UI.
+
+Firebase: Handles authentication, real-time database, and cloud storage.
+
+Google API: Provides real-time location data, place details, and maps integration.
+
+OpenAI Gemini: Powers the AI recommendation engine with advanced natural language understanding and reasoning for personalized, context-aware travel suggestions.
+
+Visit the live app https://ai-trip-planner-pied-mu.vercel.app/
